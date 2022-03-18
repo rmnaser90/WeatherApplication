@@ -1,0 +1,10 @@
+#cityName {
+    width: 70%;
+    background-color: goldenrod;
+}
+
+#searchBtn {
+    width: 50px;
+    background-color: greenyellow;
+    cursor: pointer;
+}
