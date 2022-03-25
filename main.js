@@ -14,9 +14,13 @@ const getWeather = async function (city) {
     return error;
   }
 };
+const getFavCities = () => JSON.parse(localStorage.getItem("favCities"));
 
 const addToFav = function (city) {
-  localStorage.setItem("favCity", city);
+  const favCities = getFavCities() || [];
+  console.log(typeof favCities);
+  favCities.push(city);
+  localStorage.setItem("favCities", JSON.stringify(favCities));
 };
 
 const renderWeather = function (weather) {
@@ -49,14 +53,13 @@ const renderWeather = function (weather) {
   weatherContainer.prepend(mainContainer);
 };
 
-const getFavCity = async function () {
-  const city = localStorage.getItem("favCity");
-  if (city) {
-    const weather = await getWeather(city);
-    renderWeather(weather)
+const loadFavCities = async function () {
+  const cities = getFavCities();
+  for (let i = 0; cities[i]; i++) {
+    const weather = await getWeather(cities[i]);
+    renderWeather(weather);
   }
 };
-
 
 btn.addEventListener("click", async function () {
   const city = input.value;
@@ -65,4 +68,4 @@ btn.addEventListener("click", async function () {
   renderWeather(weather);
 });
 
-getFavCity()
+loadFavCities();
